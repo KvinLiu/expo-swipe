@@ -8,12 +8,20 @@ import {
 class Deck extends Component {
   constructor(props) {
     super(props);
-    const panResponder = PanResponder.create({
 
+    const position = new Animated.ValueXY();
+
+    const panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (event, gesture) => {
+        position.setValue({ x: gesture.dx, y: gesture.dy });
+      },
+      onPanResponderRelease: () => {}
     });
 
     // this.panResponder = panResponder;
-    this.state = { panResponder };
+    // this.position = position;
+    this.state = { panResponder, position };
   }
 
   renderCards() {
@@ -22,10 +30,14 @@ class Deck extends Component {
     });
   }
   render() {
+    const { panResponder, position } = this.state;
     return (
-      <View>
-        {this.renderCards()}
-      </View>
+      <Animated.View style={position.getLayout()}>
+        <View {...panResponder.panHandlers}>
+          {this.renderCards()}
+        </View>
+      </Animated.View>
+
 
     );
   }
