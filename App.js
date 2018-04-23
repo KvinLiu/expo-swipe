@@ -21,7 +21,6 @@ export default class App extends React.Component {
         key={item.id}
         title={item.text}
         image={{uri: item.uri}}
-
         >
         <Text style={{ marginBottom: 10}}>
           I can customize the Card further.
